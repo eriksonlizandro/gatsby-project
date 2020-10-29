@@ -13,6 +13,7 @@ const defaultState = {
 const CartContext = React.createContext(defaultState);
 export default CartContext;
 
+//This function saves the information from the checkout in localStorage 
 export function CartContextProvider({ children }) {
   const [checkout, setCheckout] = useState(
     JSON.parse(
@@ -20,9 +21,12 @@ export function CartContextProvider({ children }) {
     )
   );
 
+
+
   const [successfulOrder, setSuccessfulOrder] = useState(null);
   const checkoutId = checkout?.id;
 
+  //This will load any existing checkout into our localStage from localStorage
   React.useEffect(() => {
     const getCheckout = async () => {
       if (checkoutId && typeof window !== 'undefined') {
@@ -41,6 +45,8 @@ export function CartContextProvider({ children }) {
     getCheckout();
   }, [setCheckout, setSuccessfulOrder, checkoutId]);
 
+
+  //API
   async function getProductById(productId) {
     const product = await client.product.fetch(productId);
     return product;
