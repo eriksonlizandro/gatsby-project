@@ -3,9 +3,23 @@ import Image from 'gatsby-image';
 import { ImageGalleryWrapper } from './styles';
 import ImageThumbnail from './ImageThumbnail';
 
-export function ImageGallery({ images }) {
-  const [activeImageThumbnail, setActiveImageThumbnail] =React.useState(images[0])
-  const handleClick = (image) =>{setActiveImageThumbnail(image)}
+export function ImageGallery({ selectedVariantImageId, images }) {
+  const [activeImageThumbnail, setActiveImageThumbnail] = React.useState(
+    //This piece of code allows us to display as the main image the one
+    //that we selected from the smallthumbnails
+    images.find(({ id }) => id === selectedVariantImageId) || images[0]
+  );
+
+  React.useEffect(() => {
+    setActiveImageThumbnail(
+      images.find(({ id }) => id === selectedVariantImageId) || images[0]
+    );
+  }, [selectedVariantImageId, images, setActiveImageThumbnail]);
+
+  const handleClick = image => {
+    setActiveImageThumbnail(image);
+  };
+  
   return (
     <ImageGalleryWrapper>
       <div>
@@ -16,8 +30,8 @@ export function ImageGallery({ images }) {
           return (
             <ImageThumbnail
               key={image.id}
-              isActive ={activeImageThumbnail.id === image.id}
-              onClick = {handleClick}
+              isActive={activeImageThumbnail.id === image.id}
+              onClick={handleClick}
               image={image}
             />
           );
