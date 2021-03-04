@@ -64,14 +64,14 @@ export function CartContextProvider({ children }) {
     if (lineItemVariant) {
       const newQuantity = lineItemVariant.quantity + quantity;
 
-      if (newQuantity) {
+      if (newQuantity) { //if quantity is greater than 0, we can update our line item, adding the new quantity
         newCheckout = await client.checkout.updateLineItems(newCheckout.id, [
           {
             id: lineItemVariant.id,
             quantity: newQuantity,
           },
         ]);
-      } else {
+      } else { //But if new quantity is zero because zero is a falsey value, so if new quantity is falsey, then we just remove that particular line item.
         newCheckout = await client.checkout.removeLineItems(newCheckout.id, [
           lineItemVariant.id,
         ]);

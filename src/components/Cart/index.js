@@ -7,6 +7,9 @@ export function Cart() {
   const { checkout } = React.useContext(CartContext);
   console.log(checkout);
 
+  //We declare a variable called totalQuantity and assign it a value of 0
+  //then we create a loop using forEach that goes through the array checking the amount of items
+  //then we add the items with the totalQuantity
   let totalQuantity = 0;
   if (checkout) {
     checkout.lineItems.forEach(lineItem => {

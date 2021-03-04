@@ -12,6 +12,8 @@ export function ProductQuantityAdder({ variantId, available }) {
     setQuantity(e.currentTarget.value);
   };
 
+  //We convert quantity to a number using parseInt
+  //That way we can add or subtract it 
   const handleSubmit = e => {
     e.preventDefault(); 
     updateLineItem({ variantId, quantity: parseInt(quantity, 10) }); 
